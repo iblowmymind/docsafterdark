@@ -8,7 +8,10 @@ the extension** — they use this repo to generate a single CSS file for the
 **Arc Browser "Boosts" CSS editor**, which accepts one pasted stylesheet and
 no JavaScript.
 
-Local additions (not upstream; keep them out of upstream PRs):
+This checkout is the fork `iblowmymind/docsafterdark` (`origin`), with
+`waymondrang/docsafterdark` as `upstream`. The Boost work lives on the
+`arc-boost` branch; `main` stays clean for upstream syncing. Fork-only
+files (keep them out of upstream PRs):
 
 - `build-arc-boost.mjs` — the generator (self-contained, only needs `sass`
   from upstream's devDependencies)
@@ -18,9 +21,11 @@ Local additions (not upstream; keep them out of upstream PRs):
 ## Updating after an upstream release
 
 ```sh
-git pull
+git checkout main && git pull upstream main && git push origin main
+git checkout arc-boost && git merge main
 npm install
 node build-arc-boost.mjs
+git add -u && git commit && git push   # commit the regenerated CSS
 ```
 
 Then paste the full contents of `docsafterdark-arc-boost.css` into the Arc
